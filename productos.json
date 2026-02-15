@@ -1,0 +1,10 @@
+{
+    "101": {"desc": "CellSentials (CorMin y Vita-AO)", "pc": 32, "pref": 1150.0, "pub": 1380.0},
+    "122": {"desc": "BiOmega", "pc": 12, "pref": 530.0, "pub": 636.0},
+    "131": {"desc": "Procosa", "pc": 20, "pref": 860.0, "pub": 1032.0},
+    "163": {"desc": "Paquete Vida Sana", "pc": 57, "pref": 2232.0, "pub": 2678.0},
+    "110": {"desc": "Proflavanol C100", "pc": 22, "pref": 920.0, "pub": 1104.0},
+    "100": {"desc": "TotalPak (56 sobres)", "pc": 50, "pref": 2020.0, "pub": 2424.0},
+    "123": {"desc": "MagneCal D", "pc": 9, "pref": 415.0, "pub": 498.0},
+    "144": {"desc": "Celavive Cofre Seca/Sensible", "pc": 100, "pref": 3950.0, "pub": 4740.0}
+}

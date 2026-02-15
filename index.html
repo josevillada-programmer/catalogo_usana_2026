@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USANA Manager Pro 2026</title>
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#27ae60">
+    <link rel="icon" sizes="192x192" href="https://via.placeholder.com/192/27ae60/ffffff?text=USANA">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="USANA Manager">
+    <link rel="apple-touch-icon" href="https://via.placeholder.com/192/27ae60/ffffff?text=USANA">
+
+    <style>
+        :root { --primary: #27ae60; --secondary: #2980b9; --dark: #2c3e50; --bg: #f0f2f5; --money: #2ecc71; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 10px; }
+        .wrapper { display: grid; grid-template-columns: 1fr 420px; gap: 15px; max-width: 1600px; margin: auto; }
+        
+        .catalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
+        .category { background: white; padding: 12px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        h2 { color: var(--primary); font-size: 0.85rem; border-bottom: 2px solid var(--primary); padding-bottom: 5px; margin-top: 0; text-transform: uppercase; }
+        
+        .item { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #eee; font-size: 0.75rem; }
+        .price-info { text-align: right; margin-right: 8px; }
+        .p-pub { font-weight: bold; color: var(--dark); display: block; font-size: 0.9rem; }
+        .p-pref { font-size: 0.6rem; color: #888; }
+        
+        .add-btn { background: var(--primary); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+
+        .sidebar { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); position: sticky; top: 10px; height: fit-content; max-height: 95vh; overflow-y: auto; }
+        .summary-box { background: #e8f5e9; padding: 12px; border-radius: 10px; border-left: 5px solid var(--money); margin-top: 15px; }
+        .total-final { font-weight: bold; font-size: 1.5rem; color: var(--dark); display: block; }
+        .profit-final { font-weight: bold; font-size: 1rem; color: var(--primary); margin-top: 5px; }
+        
+        select, .action-btn { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; margin-top: 8px; font-weight: bold; cursor: pointer; }
+        .action-btn.whatsapp { background: #25D366; color: white; border: none; }
+        .action-btn.copy { background: #f39c12; color: white; border: none; display: none; margin-top: 5px; }
+        .action-btn.clear { background: #e74c3c; color: white; border: none; }
+
+        #cart-list { max-height: 150px; overflow-y: auto; border-bottom: 1px solid #eee; font-size: 0.8rem; }
+        .cart-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px dashed #eee; }
+        #ticket-box { margin-top: 10px; background: #fff; border: 1px dashed #bbb; padding: 10px; font-family: monospace; font-size: 0.7rem; white-space: pre-wrap; display: none; }
+
+        @media (max-width: 900px) { .wrapper { grid-template-columns: 1fr; } .sidebar { position: static; } }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <div id="catalog-container" class="catalog"></div>
+
+    <div class="sidebar">
+        <h3 style="margin:0 0 10px 0; font-size: 1.1rem;">💼 Cotizador USANA 2026</h3>
+        <div id="cart-list"></div>
+        
+        <label style="font-size: 0.7rem; font-weight: bold; display: block; margin-top: 15px;">📈 GANANCIA EXTRA DESEADA:</label>
+        <select id="extra-pct" onchange="updateUI()"></select>
+
+        <label style="font-size: 0.7rem; font-weight: bold; display: block; margin-top: 8px;">💳 PLAN DE PAGOS:</label>
+        <select id="installments" onchange="updateUI()">
+            <option value="1">Contado</option>
+            <option value="2">2 Quincenas</option>
+            <option value="3">3 Quincenas</option>
+            <option value="4">4 Quincenas</option>
+            <option value="5">5 Quincenas</option>
+            <option value="6">6 Quincenas</option>
+        </select>
+
+        <div class="summary-box">
+            <span style="font-size: 0.7rem; color: #666;">Total Final al Cliente:</span>
+            <span class="total-final">$<span id="total-val">0</span></span>
+            <div class="profit-final">📈 Tu Ganancia Real: $<span id="profit-val">0</span></div>
+            <div id="quote-info" style="color: var(--secondary); font-size: 0.85rem; margin-top: 5px; font-weight: bold;"></div>
+        </div>
+
+        <button class="action-btn whatsapp" onclick="generateTicket()">Generar Ticket</button>
+        <button id="copy-btn" class="action-btn copy" onclick="copyTicket()">📋 Copiar Texto</button>
+        <button class="action-btn clear" onclick="clearCart()">Limpiar Todo</button>
+        
+        <div id="ticket-box"></div>
+    </div>
+</div>
+
+<script>
+    const extraSelect = document.getElementById('extra-pct');
+    for(let i=0; i<=100; i+=5) {
+        let opt = document.createElement('option');
+        opt.value = i/100; opt.text = `+${i}% Ganancia Extra`;
+        extraSelect.appendChild(opt);
+    }
+    const productsData = {
+        "NUTRICIÓN CELULAR / ESENCIALES": [
+            {n: "100 TotalPak (56 sobres)", pref: 2020, pub: 2424},
+            {n: "101 CellSentials (Pack)", pref: 1150, pub: 1380},
+            {n: "102 CorMin", pref: 460, pub: 552},
+            {n: "103 Vita AO", pref: 980, pub: 1176},
+            {n: "114 Vita Daily", pref: 520, pub: 624},
+            {n: "105 Usanimals", pref: 480, pub: 576}
+        ],
+        "OPTIMIZADORES": [
+            {n: "108 Probiotic", pref: 820, pub: 984},
+            {n: "109 VTD+", pref: 460, pub: 552},
+            {n: "110 Proflavanol C100", pref: 800, pub: 960},
+            {n: "120 MagneCal D", pref: 570, pub: 684},
+            {n: "122 BiOmega", pref: 530, pub: 636},
+            {n: "123 CoQuinone 30", pref: 970, pub: 1164},
+            {n: "131 Procosa", pref: 860, pub: 1032},
+            {n: "134 Optima IFX", pref: 870, pub: 1044},
+            {n: "135 HPS (Hígado)", pref: 800, pub: 960},
+            {n: "147 MTB+", pref: 830, pub: 996},
+            {n: "139 Rev 3 Surge Pack", pref: 715, pub: 858},
+            {n: "156 Collagen (14 porc)", pref: 780, pub: 936}
+        ],
+        "MACRO-OPTIMIZADORES": [
+            {n: "210 Nutrimeal Dutch Choco", pref: 720, pub: 864},
+            {n: "211 Nutrimeal French Van", pref: 720, pub: 864},
+            {n: "212 Nutrimeal Wild Straw", pref: 720, pub: 864},
+            {n: "214 Nutrimeal Choco 14pk", pref: 1480, pub: 1776},
+            {n: "215 Nutrimeal French Van 14pk", pref: 1480, pub: 1776},
+            {n: "216 Nutrimeal Wild Straw 14pk", pref: 1480, pub: 1776},
+            {n: "251 Reset Kit Chocolate", pref: 1745, pub: 2094},
+            {n: "2512 Reset Kit Strawberry", pref: 1980, pub: 2376}
+        ],
+        "ACTIVE NUTRITION": [
+            {n: "261 Nutrimeal+ Vainilla", pref: 1250, pub: 1500},
+            {n: "260 Nutrimeal+ Chocolate", pref: 1250, pub: 1500},
+            {n: "257 Nutrimeal+ Van 14pk", pref: 1440, pub: 1728},
+            {n: "258 Nutrimeal+ Choc 14pk", pref: 1440, pub: 1728},
+            {n: "263 Whey Protein Isolate", pref: 1750, pub: 2100},
+            {n: "167 Duo Pack Nutrimeal+", pref: 2125, pub: 2550},
+            {n: "224 Fibergy+ (28 porc)", pref: 640, pub: 768},
+            {n: "242 Electrolyte Drink", pref: 735, pub: 882}
+        ],
+        "CELAVIVE (CUIDADO FACIAL)": [
+            {n: "333 Creamy Foam Cleanser", pref: 520, pub: 624},
+            {n: "348 Bi-Phase Makeup Remover", pref: 799, pub: 959},
+            {n: "331 Perfecting Toner", pref: 899, pub: 1079},
+            {n: "339 Vitalizing Serum", pref: 1639, pub: 1967},
+            {n: "355 Resurfacing Serum", pref: 2030, pub: 2436},
+            {n: "347 Triple Action Eye", pref: 1299, pub: 1559},
+            {n: "341 Charcoal Mask + Scrub", pref: 650, pub: 780},
+            {n: "334 Protective Day Cream/Lotion", pref: 1049, pub: 1259},
+            {n: "368 Calming Cleanser", pref: 680, pub: 816},
+            {n: "367 Rescue Serum", pref: 890, pub: 1068},
+            {n: "366 Barrier Balm", pref: 665, pub: 798}
+        ],
+        "SENSÉ Y CUIDADO PERSONAL": [
+            {n: "311 Shower Gel", pref: 380, pub: 456},
+            {n: "312 Revitalizing Shampoo", pref: 380, pub: 456},
+            {n: "313 Nourishing Conditioner", pref: 380, pub: 456},
+            {n: "315 Intensive Hand Therapy", pref: 385, pub: 462},
+            {n: "392 Oral Probiotic", pref: 645, pub: 774},
+            {n: "398 Whitening Toothpaste", pref: 215, pub: 258}
+        ],
+        "PAQUETES USANA": [
+            {n: "163 Paquete Vida Sana", pref: 2232, pub: 2678},
+            {n: "165 Pq. BiOmega 11x10", pref: 5300, pub: 6360},
+            {n: "910 Pq. Proflavanol 11x10", pref: 8000, pub: 9600},
+            {n: "479 Pq. Encuentra Balance", pref: 7599, pub: 9119}
+        ],
+        "EXPERIENCE PACKS": [
+            {n: "608 Experience (200PC)", pref: 7599, pub: 9119},
+            {n: "609 Premium Exp (400PC)", pref: 13599, pub: 16319},
+            {n: "610 Ultimate Exp (600PC)", pref: 19999, pub: 23999}
+        ]
+    };
+
+    let cart = [];
+    const catalog = document.getElementById('catalog-container');
+
+    for (const [cat, prods] of Object.entries(productsData)) {
+        let html = `<div class="category"><h2>${cat}</h2>`;
+        prods.forEach(p => {
+            html += `<div class="item"><span>${p.n}</span><div class="price-info"><span class="p-pub">$${p.pub.toLocaleString()}</span><span class="p-pref">Costo: $${p.pref}</span></div><button class="add-btn" onclick="add('${p.n}', ${p.pub}, ${p.pref})">+</button></div>`;
+        });
+        catalog.innerHTML += html + `</div>`;
+    }
+
+    function add(n, pub, pref) { cart.push({n, pub, pref}); updateUI(); }
+
+    function updateUI() {
+        let tPub = cart.reduce((s, i) => s + i.pub, 0), tPref = cart.reduce((s, i) => s + i.pref, 0);
+        const pct = parseFloat(document.getElementById('extra-pct').value), pl = parseInt(document.getElementById('installments').value);
+        const tf = Math.ceil(tPub * (1 + pct)), gr = tf - tPref;
+        document.getElementById('total-val').innerText = tf.toLocaleString();
+        document.getElementById('profit-val').innerText = gr.toLocaleString();
+        document.getElementById('quote-info').innerText = pl > 1 ? `${pl} pagos de $${Math.ceil(tf/pl).toLocaleString()}` : "";
+        document.getElementById('cart-list').innerHTML = cart.map(i => `<div class="cart-row"><span>${i.n}</span><span>$${i.pub}</span></div>`).join('');
+    }
+
+    function generateTicket() {
+        if (!cart.length) return;
+        const pct = parseFloat(document.getElementById('extra-pct').value), pl = parseInt(document.getElementById('installments').value);
+        const tf = Math.ceil(cart.reduce((s, i) => s + i.pub, 0) * (1 + pct));
+        let t = `🌿 *COTIZACIÓN USANA 2026*\n----------------------------------\n`;
+        cart.forEach(i => t += `• ${i.n}\n`);
+        t += `----------------------------------\n💰 *TOTAL: $${tf.toLocaleString()}*\n`;
+        if (pl > 1) t += `💳 *PLAN:* ${pl} pagos quincenales de *$${Math.ceil(tf/pl).toLocaleString()}*\n`;
+        t += `\n¡Inversión para tu salud! ✨`;
+        const b = document.getElementById('ticket-box'); b.innerText = t; b.style.display = 'block';
+        document.getElementById('copy-btn').style.display = 'block';
+    }
+
+    function copyTicket() {
+        navigator.clipboard.writeText(document.getElementById('ticket-box').innerText).then(() => alert("✅ Copiado"));
+    }
+
+    function clearCart() { cart = []; updateUI(); document.getElementById('ticket-box').style.display = 'none'; document.getElementById('copy-btn').style.display = 'none'; }
+</script>
+</body>
+</html>
