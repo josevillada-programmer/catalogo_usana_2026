@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Público USANA 2026</title>
+    <style>
+        :root { --primary: #27ae60; --dark: #2c3e50; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; color: var(--dark); scroll-behavior: smooth; }
+        
+        nav { background: white; padding: 15px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center; gap: 12px; }
+        .nav-container { display: flex; gap: 8px; overflow-x: auto; width: 100%; justify-content: center; padding-bottom: 5px; }
+        .nav-btn { background: none; border: 1px solid var(--primary); color: var(--primary); padding: 8px 12px; border-radius: 20px; cursor: pointer; font-weight: bold; white-space: nowrap; font-size: 0.8rem; }
+        .nav-btn.active, .nav-btn:hover { background: var(--primary); color: white; }
+
+        /* BUSCADOR */
+        .search-bar { width: 100%; max-width: 400px; padding: 10px 15px; border: 2px solid #eee; border-radius: 25px; outline: none; transition: 0.3s; font-size: 0.9rem; }
+        .search-bar:focus { border-color: var(--primary); box-shadow: 0 0 8px rgba(39, 174, 96, 0.2); }
+
+        header { background: var(--dark); color: white; text-align: center; padding: 50px 20px; }
+        header h1 { margin: 0; font-size: 2.2rem; color: var(--primary); }
+
+        .container { max-width: 1300px; margin: 30px auto; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        
+        .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; transition: 0.3s; height: 100%; }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        
+        .card-img { width: 100%; height: 230px; object-fit: cover; background: #eee; }
+        
+        /* AJUSTE DE CUERPO PARA ALINEACIÓN */
+        .card-body { padding: 18px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-info-top { flex-grow: 1; }
+        .card-body h3 { margin: 0; font-size: 1.1rem; color: var(--dark); min-height: 2.5rem; }
+        .card-price { font-size: 1.4rem; font-weight: bold; color: var(--primary); margin: 12px 0; }
+        
+        .btn-info { display: block; background: var(--primary); color: white; text-align: center; padding: 12px; text-decoration: none; border-radius: 8px; font-weight: bold; transition: 0.3s; cursor: pointer; border: none; width: 100%; font-size: 1rem; box-sizing: border-box; }
+        .btn-detail { background: none; color: var(--primary); border: none; cursor: pointer; font-weight: bold; margin-bottom: 10px; text-decoration: underline; font-size: 0.85rem; padding: 0; text-align: left; display: block; }
+
+        /* MODAL */
+        dialog { border: none; border-radius: 15px; padding: 25px; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        dialog::backdrop { background: rgba(0,0,0,0.5); backdrop-filter: blur(3px); }
+        .close-modal { background: var(--dark); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; float: right; margin-top: 15px; }
+
+        .contact-box { background: white; padding: 35px; border-radius: 20px; margin-top: 50px; border-top: 6px solid var(--primary); }
+        .form-group { margin-bottom: 12px; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        .btn-send { background: var(--dark); color: white; border: none; width: 100%; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🌿 Catálogo USANA 2026</h1>
+    <p>Calidad Global en Nutrición Celular</p>
+</header>
+
+<nav>
+    <input type="text" id="searchInput" class="search-bar" placeholder="Buscar por nombre, categoría o ID..." onkeyup="handleSearch()">
+    <div class="nav-container" id="category-nav">
+        <button class="nav-btn active" onclick="filterCat('TODOS', this)">Ver Todos</button>
+    </div>
+</nav>
+
+<div class="container">
+    <div id="product-grid" class="grid"></div>
+
+    <div id="contacto" class="contact-box">
+        <h2 style="text-align: center; color: var(--primary);">Solicitar Información o Pedido</h2>
+        <form action="https://formsubmit.co/josevilladausana@gmail.com" method="POST">
+            <input type="hidden" name="_subject" id="mail-subject" value="Interés en Catálogo USANA">
+            <div class="form-group"><input type="text" name="name" placeholder="Tu Nombre" required></div>
+            <div class="form-group"><input type="email" name="email" placeholder="Tu Correo" required></div>
+            <div class="form-group"><textarea id="mail-msg" name="message" rows="4" placeholder="¿En qué productos estás interesado?" required></textarea></div>
+            <button type="submit" class="btn-send">Enviar a mi Correo</button>
+        </form>
+    </div>
+</div>
+
+<dialog id="product-modal">
+    <h2 id="modal-title" style="color: var(--primary); margin-top: 0;"></h2>
+    <p id="modal-desc" style="line-height: 1.6;"></p>
+    <button class="close-modal" onclick="this.parentElement.close()">Cerrar</button>
+</dialog>
+
+<script>
+    const productos = [
+        // ESENCIALES
+        {id: 100, cat: "ESENCIALES", n: "TotalPak (56 sobres)", p: 2424, d: "Máxima nutrición diaria en prácticos sobres. Incluye CellSentials, MagneCal D y CoQuinone para un soporte integral."},
+        {id: 101, cat: "ESENCIALES", n: "CellSentials (Pack)", p: 1380, d: "El sistema central de nutrición de USANA: Vita AO y CoreMin con tecnología InCelligence para optimizar la salud celular."},
+        {id: 102, cat: "ESENCIALES", n: "CorMin", p: 552, d: "Mezcla equilibrada de minerales esenciales de alta biodisponibilidad para el soporte de procesos metabólicos."},
+        {id: 103, cat: "ESENCIALES", n: "Vita AO", p: 1176, d: "Suplemento vitamínico premium rico en antioxidantes para combatir el estrés oxidativo y proteger las células."},
+        {id: 114, cat: "ESENCIALES", n: "Vita Daily", p: 624, d: "Multivitamínico diario ideal para quienes buscan un soporte nutricional básico y efectivo."},
+        {id: 105, cat: "ESENCIALES", n: "Usanimals", p: 576, d: "Nutrición completa y divertida para niños en tabletas masticables con sabor a frutas y sin azúcares artificiales."},
+        
+        // OPTIMIZADORES
+        {id: 108, cat: "OPTIMIZADORES", n: "Probiotic", p: 984, d: "Mezcla de probióticos que favorece la salud digestiva e inmunológica con cepas clínicamente estudiadas."},
+        {id: 109, cat: "OPTIMIZADORES", n: "VTD+", p: 552, d: "Suplemento de Vitamina D que apoya la absorción de calcio y fortalece el sistema inmunológico."},
+        {id: 110, cat: "OPTIMIZADORES", n: "Proflavanol C100", p: 960, d: "Poderosa combinación de extracto de semilla de uva y vitamina C para la salud cardiovascular y dérmica."},
+        {id: 120, cat: "OPTIMIZADORES", n: "MagneCal D", p: 684, d: "Equilibrio perfecto de Magnesio, Calcio y Vitamina D para mantener huesos y dientes fuertes."},
+        {id: 122, cat: "OPTIMIZADORES", n: "BiOmega", p: 636, d: "Aceite de pescado ultra puro rico en EPA y DHA, esencial para la salud cerebral y del corazón."},
+        {id: 123, cat: "OPTIMIZADORES", n: "CoQuinone 30", p: 1164, d: "Combinación de Coenzima Q10 y Ácido Alfa Lipoico para la producción de energía celular y salud cardiaca."},
+        {id: 131, cat: "OPTIMIZADORES", n: "Procosa", p: 1032, d: "Soporte avanzado para las articulaciones con glucosamina y curcumina de alta absorción."},
+        {id: 134, cat: "OPTIMIZADORES", n: "Optima IFX", p: 1044, d: "Suplemento diseñado para apoyar la salud ocular y proteger la visión del daño por luz azul."},
+        {id: 135, cat: "OPTIMIZADORES", n: "HPS (Hígado)", p: 960, d: "Fórmula especializada para apoyar los procesos naturales de desintoxicación del hígado."},
+        {id: 147, cat: "OPTIMIZADORES", n: "MTB+", p: 996, d: "Apoya el metabolismo energético saludable y ayuda a mantener niveles óptimos de energía durante el día."},
+        {id: 139, cat: "OPTIMIZADORES", n: "Rev 3 Surge Pack", p: 858, d: "Bebida energética inteligente con ingredientes naturales que proporcionan energía limpia y duradera."},
+        {id: 156, cat: "OPTIMIZADORES", n: "Collagen", p: 936, d: "Péptidos de colágeno de alta calidad para mejorar la elasticidad de la piel y fortalecer cabello y uñas."},
+        
+        // ACTIVE NUTRITION
+        {id: 210, cat: "ACTIVE NUTRITION", n: "Nutrimeal Dutch Chocolate", p: 864, d: "Malteada sustituto de comida con bajo índice glucémico y delicioso sabor a chocolate holandés."},
+        {id: 211, cat: "ACTIVE NUTRITION", n: "Nutrimeal French Vanilla", p: 864, d: "Sustituto de comida equilibrado con proteínas, fibras y carbohidratos saludables sabor vainilla francesa."},
+        {id: 212, cat: "ACTIVE NUTRITION", n: "Nutrimeal Wild Strawberry", p: 864, d: "Deliciosa malteada nutritiva sabor fresa silvestre, ideal para el control de peso saludable."},
+        {id: 258, cat: "ACTIVE NUTRITION", n: "Nutrimeal Choco 14pk", p: 1776, d: "Paquete individual de 14 porciones de Nutrimeal Chocolate para llevar tu nutrición a todas partes."},
+        {id: 251, cat: "ACTIVE NUTRITION", n: "Reset Kit Chocolate", p: 2094, d: "Programa de 5 días para transformar tu cuerpo y hábitos alimenticios, incluye malteadas de chocolate y vainilla."},
+        {id: 2512, cat: "ACTIVE NUTRITION", n: "Reset Kit Strawberry", p: 2376, d: "Kit de inicio saludable de 5 días con sabor a fresa y vainilla para reiniciar tu metabolismo."},
+        {id: 261, cat: "ACTIVE NUTRITION", n: "Nutrimeal+ Vainilla", p: 1500, d: "Fórmula avanzada con mayor contenido de proteína y fibra para una saciedad prolongada sabor vainilla."},
+        {id: 263, cat: "ACTIVE NUTRITION", n: "Whey Protein Isolate", p: 2100, d: "Aislado de proteína de suero de leche de rápida absorción, ideal para la recuperación muscular."},
+        {id: 224, cat: "ACTIVE NUTRITION", n: "Fibergy+", p: 768, d: "Mezcla de fibras naturales sin sabor que apoya la salud digestiva y la regularidad."},
+        {id: 242, cat: "ACTIVE NUTRITION", n: "Electrolyte Drink", p: 882, d: "Bebida hidratante con electrolitos esenciales para reponer lo perdido durante la actividad física."},
+        {id: 257, cat: "ACTIVE NUTRITION", n: "Nutrimeal Vainilla 14pk", p: 1776, d: "14 prácticos sobres individuales de Nutrimeal Vainilla para mantener tu dieta en orden."},
+        {id: 167, cat: "ACTIVE NUTRITION", n: "Nutrimeal Napolitano", p: 864, d: "El clásico sabor napolitano en una malteada nutricionalmente completa y equilibrada."},
+        {id: 1671, cat: "ACTIVE NUTRITION", n: "Nutrimeal+ Duo Vainilla", p: 1500, d: "Paquete doble de Nutrimeal+ para quienes buscan optimizar su consumo de proteína diaria."},
+        {id: 260, cat: "ACTIVE NUTRITION", n: "Nutrimeal+ Chocolate", p: 1500, d: "Nutrición avanzada sabor chocolate con proteínas de alta calidad para el rendimiento físico."},
+        {id: 1672, cat: "ACTIVE NUTRITION", n: "Nutrimeal+ Duo Chocolate", p: 1500, d: "Doble porción de nutrición avanzada para el soporte muscular y control de antojos."},
+
+        // CELAVIVE
+        {id: 333, cat: "CELAVIVE", n: "Creamy Foam Cleanser", p: 624, d: "Limpiador en espuma que elimina impurezas mientras hidrata profundamente la piel seca o sensible."},
+        {id: 348, cat: "CELAVIVE", n: "Makeup Remover", p: 959, d: "Desmaquillante bifásico que remueve suavemente el maquillaje incluso a prueba de agua sin irritar."},
+        {id: 331, cat: "CELAVIVE", n: "Perfecting Toner", p: 1079, d: "Tónico que equilibra el pH de la piel y la prepara para absorber mejor los tratamientos posteriores."},
+        {id: 339, cat: "CELAVIVE", n: "Vitalizing Serum", p: 1967, d: "Suero reafirmante que reduce visiblemente la apariencia de líneas finas y arrugas."},
+        {id: 355, cat: "CELAVIVE", n: "Resurfacing Serum", p: 2436, d: "Concentrado que mejora la textura de la piel y minimiza la apariencia de poros abiertos."},
+        {id: 347, cat: "CELAVIVE", n: "Triple Action Eye Cream", p: 1559, d: "Crema para el contorno de ojos que combate ojeras, bolsas y líneas de expresión."},
+        {id: 334, cat: "CELAVIVE", n: "Protective Day Cream", p: 1259, d: "Hidratante de día con protección solar que protege la piel de los rayos UV y la contaminación."},
+        {id: 368, cat: "CELAVIVE", n: "Calming Cleanser", p: 816, d: "Limpieza suave para pieles irritadas o con rojeces, manteniendo la barrera de humedad."},
+        {id: 366, cat: "CELAVIVE", n: "Barrier Balm", p: 798, d: "Bálsamo protector que sella la hidratación y protege la piel de climas extremos."},
+        {id: 367, cat: "CELAVIVE", n: "Postbiotic Barrier Balm", p: 798, d: "Bálsamo ultra-hidratante con posbióticos que ayuda a calmar y proteger la barrera cutánea de agresores externos."},
+        
+        // SENSÉ
+        {id: 311, cat: "SENSÉ", n: "Energizing Shower Gel", p: 456, d: "Gel de ducha refrescante con extractos botánicos que limpia sin resecar la piel."},
+        {id: 312, cat: "SENSÉ", n: "Revitalizing Shampoo", pref: 380, p: 456, d: "Shampoo equilibrante que fortalece el cabello desde la raíz y aporta brillo natural."},
+        {id: 313, cat: "SENSÉ", n: "Nourishing Conditioner", p: 456, d: "Acondicionador hidratante que devuelve el brillo y la suavidad al cabello maltratado."},
+        {id: 314, cat: "SENSÉ", n: "Firming Body Nourisher", p: 624, d: "Crema corporal reafirmante que hidrata profundamente y mejora la elasticidad de la piel."},
+        {id: 315, cat: "SENSÉ", n: "Intensive Hand Therapy", p: 462, d: "Crema intensiva para manos que combate la sequedad extrema sin dejar sensación grasa."},
+        {id: 398, cat: "CUIDADO ORAL", n: "Whitening Toothpaste", p: 258, d: "Pasta dental libre de flúor con ADP-1 para una limpieza profunda y sonrisa más blanca."},
+        
+        // PAQUETES Y PROMOCIONES
+        {id: 163, cat: "PAQUETES", n: "Paquete Vida Sana", p: 2678, d: "El inicio ideal: Incluye CellSentials y BiOmega para un soporte nutricional de base sólida."},
+        {id: 165, cat: "PAQUETES", n: "Paquete Biomega 11*10", p: 6360, d: "Ahorra adquiriendo 11 unidades de BiOmega al precio de 10. Salud cardiovascular al mejor precio."},
+        {id: 910, cat: "PAQUETES", n: "Paquete Proflavanol C100 11*10", p: 9600, d: "Promoción especial de 11 unidades de Proflavanol para un soporte antioxidante prolongado."},
+        {id: 951, cat: "PROMOCIONES", n: "Promoción 'Shake USANA'", p: 5999, d: "Incluye 2 RESET KIT (Wild Strawberry), 2 MTB+ y un Shaker BrüMate edición limitada sin costo."},
+    ];
+
+    const grid = document.getElementById('product-grid');
+    const nav = document.getElementById('category-nav');
+    const modal = document.getElementById('product-modal');
+    const cats = [...new Set(productos.map(p => p.cat))];
+
+    cats.forEach(c => {
+        const btn = document.createElement('button');
+        btn.className = "nav-btn"; btn.innerText = c;
+        btn.onclick = (e) => filterCat(c, e.target);
+        nav.appendChild(btn);
+    });
+
+    function render(data) {
+        grid.innerHTML = data.map(p => `
+            <div class="card">
+                <img src="img/${p.id}.jpg" class="card-img" loading="lazy" onerror="this.src='https://via.placeholder.com/300x230?text=${p.n}'">
+                <div class="card-body">
+                    <div class="card-info-top">
+                        <h3>${p.n}</h3>
+                        <div class="card-price">$${p.p.toLocaleString()}</div>
+                        <button class="btn-detail" onclick="showModal(${p.id})">Ver descripción</button>
+                    </div>
+                    <a href="#contacto" class="btn-info" onclick="setInterest('${p.n}')">Me interesa</a>
+                </div>
+            </div>`).join('');
+    }
+
+    function handleSearch() {
+        const term = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = productos.filter(p => 
+            p.n.toLowerCase().includes(term) || 
+            p.cat.toLowerCase().includes(term) ||
+            p.id.toString().includes(term)
+        );
+        render(filtered);
+    }
+
+    function filterCat(cat, btn) {
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        if(btn) btn.classList.add('active');
+        document.getElementById('searchInput').value = "";
+        render(cat === 'TODOS' ? productos : productos.filter(p => p.cat === cat));
+    }
+
+    function showModal(id) {
+        const p = productos.find(prod => prod.id === id);
+        document.getElementById('modal-title').innerText = p.n;
+        document.getElementById('modal-desc').innerText = p.d || "Sin descripción disponible.";
+        modal.showModal();
+    }
+
+    function setInterest(n) {
+        document.getElementById('mail-subject').value = "Interés en: " + n;
+        document.getElementById('mail-msg').value = "Hola, me interesa el producto " + n + ". ¿Me podrías dar más detalles?";
+    }
+
+    render(productos);
+</script>
+</body>
+</html>
