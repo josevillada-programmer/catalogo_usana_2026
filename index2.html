@@ -28,11 +28,12 @@
         
         .card-img { width: 100%; height: 230px; object-fit: cover; background: #eee; }
         
-        /* AJUSTE DE CUERPO PARA ALINEACIÓN */
         .card-body { padding: 18px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .card-info-top { flex-grow: 1; }
         .card-body h3 { margin: 0; font-size: 1.1rem; color: var(--dark); min-height: 2.5rem; }
-        .card-price { font-size: 1.4rem; font-weight: bold; color: var(--primary); margin: 12px 0; }
+        /* AJUSTE PARA PRECIO OCULTO */
+        .card-price { font-size: 1rem; font-weight: bold; color: #7f8c8d; margin: 12px 0; }
+        .card-price span { color: var(--primary); }
         
         .btn-info { display: block; background: var(--primary); color: white; text-align: center; padding: 12px; text-decoration: none; border-radius: 8px; font-weight: bold; transition: 0.3s; cursor: pointer; border: none; width: 100%; font-size: 1rem; box-sizing: border-box; }
         .btn-detail { background: none; color: var(--primary); border: none; cursor: pointer; font-weight: bold; margin-bottom: 10px; text-decoration: underline; font-size: 0.85rem; padding: 0; text-align: left; display: block; }
@@ -66,13 +67,13 @@
     <div id="product-grid" class="grid"></div>
 
     <div id="contacto" class="contact-box">
-        <h2 style="text-align: center; color: var(--primary);">Solicitar Información o Pedido</h2>
+        <h2 style="text-align: center; color: var(--primary);">Solicitar Cotización Formal</h2>
         <form action="https://formsubmit.co/josevillada2000jp@gmail.com" method="POST">
-            <input type="hidden" name="_subject" id="mail-subject" value="Interés en Catálogo USANA">
+            <input type="hidden" name="_subject" id="mail-subject" value="Solicitud de Cotización USANA">
             <div class="form-group"><input type="text" name="name" placeholder="Tu Nombre" required></div>
             <div class="form-group"><input type="email" name="email" placeholder="Tu Correo" required></div>
-            <div class="form-group"><textarea id="mail-msg" name="message" rows="4" placeholder="¿En qué productos estás interesado?" required></textarea></div>
-            <button type="submit" class="btn-send">Enviar a mi Correo</button>
+            <div class="form-group"><textarea id="mail-msg" name="message" rows="4" placeholder="¿En qué productos estás interesado para tu cotización?" required></textarea></div>
+            <button type="submit" class="btn-send">Enviar Solicitud al Consultor</button>
         </form>
     </div>
 </div>
@@ -138,7 +139,7 @@
         
         // SENSÉ
         {id: 311, cat: "SENSÉ", n: "Energizing Shower Gel", p: 456, d: "Gel de ducha refrescante con extractos botánicos que limpia sin resecar la piel."},
-        {id: 312, cat: "SENSÉ", n: "Revitalizing Shampoo", pref: 380, p: 456, d: "Shampoo equilibrante que fortalece el cabello desde la raíz y aporta brillo natural."},
+        {id: 312, cat: "SENSÉ", n: "Revitalizing Shampoo", p: 456, d: "Shampoo equilibrante que fortalece el cabello desde la raíz y aporta brillo natural."},
         {id: 313, cat: "SENSÉ", n: "Nourishing Conditioner", p: 456, d: "Acondicionador hidratante que devuelve el brillo y la suavidad al cabello maltratado."},
         {id: 314, cat: "SENSÉ", n: "Firming Body Nourisher", p: 624, d: "Crema corporal reafirmante que hidrata profundamente y mejora la elasticidad de la piel."},
         {id: 315, cat: "SENSÉ", n: "Intensive Hand Therapy", p: 462, d: "Crema intensiva para manos que combate la sequedad extrema sin dejar sensación grasa."},
@@ -170,10 +171,10 @@
                 <div class="card-body">
                     <div class="card-info-top">
                         <h3>${p.n}</h3>
-                        <div class="card-price">$${p.p.toLocaleString()}</div>
+                        <div class="card-price">Precio: <span>Consultar cotización</span></div>
                         <button class="btn-detail" onclick="showModal(${p.id})">Ver descripción</button>
                     </div>
-                    <a href="#contacto" class="btn-info" onclick="setInterest('${p.n}')">Me interesa</a>
+                    <a href="#contacto" class="btn-info" onclick="setInterest('${p.n}')">Cotizar ahora</a>
                 </div>
             </div>`).join('');
     }
@@ -203,8 +204,8 @@
     }
 
     function setInterest(n) {
-        document.getElementById('mail-subject').value = "Interés en: " + n;
-        document.getElementById('mail-msg').value = "Hola, me interesa el producto " + n + ". ¿Me podrías dar más detalles?";
+        document.getElementById('mail-subject').value = "Solicitud de Cotización Formal: " + n;
+        document.getElementById('mail-msg').value = "Hola, estoy interesado en obtener una cotización formal del producto: " + n + ". Quedo a la espera de los detalles de precio y formas de pago.";
     }
 
     render(productos);
