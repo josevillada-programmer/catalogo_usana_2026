@@ -87,69 +87,72 @@
 <script>
     const productos = [
         // ESENCIALES
-        {id: 100, cat: "ESENCIALES", n: "TotalPak (56 sobres)", p: 2424, d: "Máxima nutrición diaria en prácticos sobres. Incluye CellSentials, MagneCal D y CoQuinone para un soporte integral."},
-        {id: 101, cat: "ESENCIALES", n: "CellSentials (Pack)", p: 1380, d: "El sistema central de nutrición de USANA: Vita AO y CoreMin con tecnología InCelligence para optimizar la salud celular."},
-        {id: 102, cat: "ESENCIALES", n: "CorMin", p: 552, d: "Mezcla equilibrada de minerales esenciales de alta biodisponibilidad para el soporte de procesos metabólicos."},
-        {id: 103, cat: "ESENCIALES", n: "Vita AO", p: 1176, d: "Suplemento vitamínico premium rico en antioxidantes para combatir el estrés oxidativo y proteger las células."},
-        {id: 114, cat: "ESENCIALES", n: "Vita Daily", p: 624, d: "Multivitamínico diario ideal para quienes buscan un soporte nutricional básico y efectivo."},
-        {id: 105, cat: "ESENCIALES", n: "Usanimals", p: 576, d: "Nutrición completa y divertida para niños en tabletas masticables con sabor a frutas y sin azúcares artificiales."},
+        {id: 100, cat: "ESENCIALES", n: "TotalPak (56 sobres)", p: 0, d: "Máxima nutrición diaria en prácticos sobres. Incluye CellSentials, MagneCal D y CoQuinone para un soporte integral."},
+        {id: 101, cat: "ESENCIALES", n: "CellSentials (Pack)", p: 0, d: "El sistema central de nutrición de USANA: Vita AO y CoreMin con tecnología InCelligence para optimizar la salud celular."},
+        {id: 102, cat: "ESENCIALES", n: "CorMin", p: 0, d: "Mezcla equilibrada de minerales esenciales de alta biodisponibilidad para el soporte de procesos metabólicos."},
+        {id: 103, cat: "ESENCIALES", n: "Vita AO", p: 0, d: "Suplemento vitamínico premium rico en antioxidantes para combatir el estrés oxidativo y proteger las células."},
+        {id: 114, cat: "ESENCIALES", n: "Vita Daily", p: 0, d: "Multivitamínico diario ideal para quienes buscan un soporte nutricional básico y efectivo."},
+        {id: 105, cat: "ESENCIALES", n: "Usanimals", p: 0, d: "Nutrición completa y divertida para niños en tabletas masticables con sabor a frutas y sin azúcares artificiales."},
         
-        // OPTIMIZADORES
-        {id: 108, cat: "OPTIMIZADORES", n: "Probiotic", p: 984, d: "Mezcla de probióticos que favorece la salud digestiva e inmunológica con cepas clínicamente estudiadas."},
-        {id: 109, cat: "OPTIMIZADORES", n: "VTD+", p: 552, d: "Suplemento de Vitamina D que apoya la absorción de calcio y fortalece el sistema inmunológico."},
-        {id: 110, cat: "OPTIMIZADORES", n: "Proflavanol C100", p: 960, d: "Poderosa combinación de extracto de semilla de uva y vitamina C para la salud cardiovascular y dérmica."},
-        {id: 120, cat: "OPTIMIZADORES", n: "MagneCal D", p: 684, d: "Equilibrio perfecto de Magnesio, Calcio y Vitamina D para mantener huesos y dientes fuertes."},
-        {id: 122, cat: "OPTIMIZADORES", n: "BiOmega", p: 636, d: "Aceite de pescado ultra puro rico en EPA y DHA, esencial para la salud cerebral y del corazón."},
-        {id: 123, cat: "OPTIMIZADORES", n: "CoQuinone 30", p: 1164, d: "Combinación de Coenzima Q10 y Ácido Alfa Lipoico para la producción de energía celular y salud cardiaca."},
-        {id: 131, cat: "OPTIMIZADORES", n: "Procosa", p: 1032, d: "Soporte avanzado para las articulaciones con glucosamina y curcumina de alta absorción."},
-        {id: 134, cat: "OPTIMIZADORES", n: "Optima IFX", p: 1044, d: "Suplemento diseñado para apoyar la salud ocular y proteger la visión del daño por luz azul."},
-        {id: 135, cat: "OPTIMIZADORES", n: "HPS (Hígado)", p: 960, d: "Fórmula especializada para apoyar los procesos naturales de desintoxicación del hígado."},
-        {id: 147, cat: "OPTIMIZADORES", n: "MTB+", p: 996, d: "Apoya el metabolismo energético saludable y ayuda a mantener niveles óptimos de energía durante el día."},
-        {id: 139, cat: "OPTIMIZADORES", n: "Rev 3 Surge Pack", p: 858, d: "Bebida energética inteligente con ingredientes naturales que proporcionan energía limpia y duradera."},
-        {id: 156, cat: "OPTIMIZADORES", n: "Collagen", p: 936, d: "Péptidos de colágeno de alta calidad para mejorar la elasticidad de la piel y fortalecer cabello y uñas."},
+        // OPTIMIZADORES (AQUÍ VAN LOS LANZAMIENTOS Y REFORMULACIONES)
+        {id: 122, cat: "OPTIMIZADORES", n: "BiOmega (Nueva Fórmula)", p: 0, d: "¡NUEVO! Aceite de pescado ultra puro ahora reformulado con mayores dosis de EPA y DHA para potenciar su efecto antiinflamatorio y proteger el sistema cardiovascular."},
+        {id: 901, cat: "OPTIMIZADORES", n: "Glow", p: 0, d: "¡NUEVO LANZAMIENTO 2026! Detalles técnicos, beneficios completos y precio próximamente disponibles."},
+        {id: 902, cat: "OPTIMIZADORES", n: "Circulate", p: 0, d: "¡NUEVO LANZAMIENTO 2026! Detalles técnicos, beneficios completos y precio próximamente disponibles."},
+        {id: 108, cat: "OPTIMIZADORES", n: "Probiotic", p: 0, d: "Mezcla de probióticos que favorece la salud digestiva e inmunológica con cepas clínicamente estudiadas."},
+        {id: 109, cat: "OPTIMIZADORES", n: "VTD+", p: 0, d: "Suplemento de Vitamina D que apoya la absorción de calcio y fortalece el sistema inmunológico."},
+        {id: 110, cat: "OPTIMIZADORES", n: "Proflavanol C100", p: 0, d: "Poderosa combinación de extracto de semilla de uva y vitamina C para la salud cardiovascular y dérmica."},
+        {id: 120, cat: "OPTIMIZADORES", n: "MagneCal D", p: 0, d: "Equilibrio perfecto de Magnesio, Calcio y Vitamina D para mantener huesos y dientes fuertes."},
+        {id: 123, cat: "OPTIMIZADORES", n: "CoQuinone 30", p: 0, d: "Combinación de Coenzima Q10 y Ácido Alfa Lipoico para la producción de energía celular y salud cardiaca."},
+        {id: 131, cat: "OPTIMIZADORES", n: "Procosa", p: 0, d: "Soporte avanzado para las articulaciones con glucosamina y curcumina de alta absorción."},
+        {id: 134, cat: "OPTIMIZADORES", n: "Optima IFX", p: 0, d: "Suplemento diseñado para apoyar la salud ocular y proteger la visión del daño por luz azul."},
+        {id: 135, cat: "OPTIMIZADORES", n: "HPS (Hígado)", p: 0, d: "Fórmula especializada para apoyar los procesos naturales de desintoxicación del hígado."},
+        {id: 147, cat: "OPTIMIZADORES", n: "MTB+", p: 0, d: "Apoya el metabolismo energético saludable y ayuda a mantener niveles óptimos de energía durante el día."},
+        {id: 139, cat: "OPTIMIZADORES", n: "Rev 3 Surge Pack", p: 0, d: "Bebida energética inteligente con ingredientes naturales que proporcionan energía limpia y duradera."},
+        {id: 156, cat: "OPTIMIZADORES", n: "Collagen", p: 0, d: "Péptidos de colágeno de alta calidad para mejorar la elasticidad de la piel y fortalecer cabello y uñas."},
         
-        // ACTIVE NUTRITION
-        {id: 210, cat: "ACTIVE NUTRITION", n: "Nutrimeal Dutch Chocolate", p: 864, d: "Malteada sustituto de comida con bajo índice glucémico y delicioso sabor a chocolate holandés."},
-        {id: 211, cat: "ACTIVE NUTRITION", n: "Nutrimeal French Vanilla", p: 864, d: "Sustituto de comida equilibrado con proteínas, fibras y carbohidratos saludables sabor vainilla francesa."},
-        {id: 212, cat: "ACTIVE NUTRITION", n: "Nutrimeal Wild Strawberry", p: 864, d: "Deliciosa malteada nutritiva sabor fresa silvestre, ideal para el control de peso saludable."},
-        {id: 258, cat: "ACTIVE NUTRITION", n: "Nutrimeal Choco 14pk", p: 1776, d: "Paquete individual de 14 porciones de Nutrimeal Chocolate para llevar tu nutrición a todas partes."},
-        {id: 251, cat: "ACTIVE NUTRITION", n: "Reset Kit Chocolate", p: 2094, d: "Programa de 5 días para transformar tu cuerpo y hábitos alimenticios, incluye malteadas de chocolate y vainilla."},
-        {id: 2512, cat: "ACTIVE NUTRITION", n: "Reset Kit Strawberry", p: 2376, d: "Kit de inicio saludable de 5 días con sabor a fresa y vainilla para reiniciar tu metabolismo."},
-        {id: 261, cat: "ACTIVE NUTRITION", n: "Nutrimeal+ Vainilla", p: 1500, d: "Fórmula avanzada con mayor contenido de proteína y fibra para una saciedad prolongada sabor vainilla."},
-        {id: 263, cat: "ACTIVE NUTRITION", n: "Whey Protein Isolate", p: 2100, d: "Aislado de proteína de suero de leche de rápida absorción, ideal para la recuperación muscular."},
-        {id: 224, cat: "ACTIVE NUTRITION", n: "Fibergy+", p: 768, d: "Mezcla de fibras naturales sin sabor que apoya la salud digestiva y la regularidad."},
-        {id: 242, cat: "ACTIVE NUTRITION", n: "Electrolyte Drink", p: 882, d: "Bebida hidratante con electrolitos esenciales para reponer lo perdido durante la actividad física."},
-        {id: 257, cat: "ACTIVE NUTRITION", n: "Nutrimeal Vainilla 14pk", p: 1776, d: "14 prácticos sobres individuales de Nutrimeal Vainilla para mantener tu dieta en orden."},
-        {id: 167, cat: "ACTIVE NUTRITION", n: "Nutrimeal Napolitano", p: 864, d: "El clásico sabor napolitano en una malteada nutricionalmente completa y equilibrada."},
-        {id: 1671, cat: "ACTIVE NUTRITION", n: "Nutrimeal+ Duo Vainilla", p: 1500, d: "Paquete doble de Nutrimeal+ para quienes buscan optimizar su consumo de proteína diaria."},
-        {id: 260, cat: "ACTIVE NUTRITION", n: "Nutrimeal+ Chocolate", p: 1500, d: "Nutrición avanzada sabor chocolate con proteínas de alta calidad para el rendimiento físico."},
-        {id: 1672, cat: "ACTIVE NUTRITION", n: "Nutrimeal+ Duo Chocolate", p: 1500, d: "Doble porción de nutrición avanzada para el soporte muscular y control de antojos."},
+        // ACTIVE NUTRITION (AQUÍ ENTRAN LOS CORE AMINOS)
+        {id: 900, cat: "ACTIVE NUTRITION", n: "Core Aminos", p: 0, d: "¡NUEVO LANZAMIENTO! Aminoácidos en polvo con un delicioso sabor a limón. Diseñados para acelerar la recuperación del hardware muscular y optimizar el rendimiento. (Precios próximamente)."},
+        {id: 210, cat: "ACTIVE NUTRITION", n: "Nutrimeal Dutch Chocolate", p: 0, d: "Malteada sustituto de comida con bajo índice glucémico y delicioso sabor a chocolate holandés."},
+        {id: 211, cat: "ACTIVE NUTRITION", n: "Nutrimeal French Vanilla", p: 0, d: "Sustituto de comida equilibrado con proteínas, fibras y carbohidratos saludables sabor vainilla francesa."},
+        {id: 212, cat: "ACTIVE NUTRITION", n: "Nutrimeal Wild Strawberry", p: 0, d: "Deliciosa malteada nutritiva sabor fresa silvestre, ideal para el control de peso saludable."},
+        {id: 258, cat: "ACTIVE NUTRITION", n: "Nutrimeal Choco 14pk", p: 0, d: "Paquete individual de 14 porciones de Nutrimeal Chocolate para llevar tu nutrición a todas partes."},
+        {id: 251, cat: "ACTIVE NUTRITION", n: "Reset Kit Chocolate", p: 0, d: "Programa de 5 días para transformar tu cuerpo y hábitos alimenticios, incluye malteadas de chocolate y vainilla."},
+        {id: 2512, cat: "ACTIVE NUTRITION", n: "Reset Kit Strawberry", p: 0, d: "Kit de inicio saludable de 5 días con sabor a fresa y vainilla para reiniciar tu metabolismo."},
+        {id: 261, cat: "ACTIVE NUTRITION", n: "Nutrimeal+ Vainilla", p: 0, d: "Fórmula avanzada con mayor contenido de proteína y fibra para una saciedad prolongada sabor vainilla."},
+        {id: 263, cat: "ACTIVE NUTRITION", n: "Whey Protein Isolate", p: 0, d: "Aislado de proteína de suero de leche de rápida absorción, ideal para la recuperación muscular."},
+        {id: 224, cat: "ACTIVE NUTRITION", n: "Fibergy+", p: 0, d: "Mezcla de fibras naturales sin sabor que apoya la salud digestiva y la regularidad."},
+        {id: 242, cat: "ACTIVE NUTRITION", n: "Electrolyte Drink", p: 0, d: "Bebida hidratante con electrolitos esenciales para reponer lo perdido durante la actividad física."},
+        {id: 257, cat: "ACTIVE NUTRITION", n: "Nutrimeal Vainilla 14pk", p: 0, d: "14 prácticos sobres individuales de Nutrimeal Vainilla para mantener tu dieta en orden."},
+        {id: 167, cat: "ACTIVE NUTRITION", n: "Nutrimeal Napolitano", p: 0, d: "El clásico sabor napolitano en una malteada nutricionalmente completa y equilibrada."},
+        {id: 1671, cat: "ACTIVE NUTRITION", n: "Nutrimeal+ Duo Vainilla", p: 0, d: "Paquete doble de Nutrimeal+ para quienes buscan optimizar su consumo de proteína diaria."},
+        {id: 260, cat: "ACTIVE NUTRITION", n: "Nutrimeal+ Chocolate", p: 0, d: "Nutrición avanzada sabor chocolate con proteínas de alta calidad para el rendimiento físico."},
+        {id: 1672, cat: "ACTIVE NUTRITION", n: "Nutrimeal+ Duo Chocolate", p: 0, d: "Doble porción de nutrición avanzada para el soporte muscular y control de antojos."},
 
         // CELAVIVE
-        {id: 333, cat: "CELAVIVE", n: "Creamy Foam Cleanser", p: 624, d: "Limpiador en espuma que elimina impurezas mientras hidrata profundamente la piel seca o sensible."},
-        {id: 348, cat: "CELAVIVE", n: "Makeup Remover", p: 959, d: "Desmaquillante bifásico que remueve suavemente el maquillaje incluso a prueba de agua sin irritar."},
-        {id: 331, cat: "CELAVIVE", n: "Perfecting Toner", p: 1079, d: "Tónico que equilibra el pH de la piel y la prepara para absorber mejor los tratamientos posteriores."},
-        {id: 339, cat: "CELAVIVE", n: "Vitalizing Serum", p: 1967, d: "Suero reafirmante que reduce visiblemente la apariencia de líneas finas y arrugas."},
-        {id: 355, cat: "CELAVIVE", n: "Resurfacing Serum", p: 2436, d: "Concentrado que mejora la textura de la piel y minimiza la apariencia de poros abiertos."},
-        {id: 347, cat: "CELAVIVE", n: "Triple Action Eye Cream", p: 1559, d: "Crema para el contorno de ojos que combate ojeras, bolsas y líneas de expresión."},
-        {id: 334, cat: "CELAVIVE", n: "Protective Day Cream", p: 1259, d: "Hidratante de día con protección solar que protege la piel de los rayos UV y la contaminación."},
-        {id: 368, cat: "CELAVIVE", n: "Calming Cleanser", p: 816, d: "Limpieza suave para pieles irritadas o con rojeces, manteniendo la barrera de humedad."},
-        {id: 366, cat: "CELAVIVE", n: "Barrier Balm", p: 798, d: "Bálsamo protector que sella la hidratación y protege la piel de climas extremos."},
-        {id: 367, cat: "CELAVIVE", n: "Postbiotic Barrier Balm", p: 798, d: "Bálsamo ultra-hidratante con posbióticos que ayuda a calmar y proteger la barrera cutánea de agresores externos."},
+        {id: 333, cat: "CELAVIVE", n: "Creamy Foam Cleanser", p: 0, d: "Limpiador en espuma que elimina impurezas mientras hidrata profundamente la piel seca o sensible."},
+        {id: 348, cat: "CELAVIVE", n: "Makeup Remover", p: 0, d: "Desmaquillante bifásico que remueve suavemente el maquillaje incluso a prueba de agua sin irritar."},
+        {id: 331, cat: "CELAVIVE", n: "Perfecting Toner", p: 0, d: "Tónico que equilibra el pH de la piel y la prepara para absorber mejor los tratamientos posteriores."},
+        {id: 339, cat: "CELAVIVE", n: "Vitalizing Serum", p: 0, d: "Suero reafirmante que reduce visiblemente la apariencia de líneas finas y arrugas."},
+        {id: 355, cat: "CELAVIVE", n: "Resurfacing Serum", p: 0, d: "Concentrado que mejora la textura de la piel y minimiza la apariencia de poros abiertos."},
+        {id: 347, cat: "CELAVIVE", n: "Triple Action Eye Cream", p: 0, d: "Crema para el contorno de ojos que combate ojeras, bolsas y líneas de expresión."},
+        {id: 334, cat: "CELAVIVE", n: "Protective Day Cream", p: 0, d: "Hidratante de día con protección solar que protege la piel de los rayos UV y la contaminación."},
+        {id: 368, cat: "CELAVIVE", n: "Calming Cleanser", p: 0, d: "Limpieza suave para pieles irritadas o con rojeces, manteniendo la barrera de humedad."},
+        {id: 366, cat: "CELAVIVE", n: "Barrier Balm", p: 0, d: "Bálsamo protector que sella la hidratación y protege la piel de climas extremos."},
+        {id: 367, cat: "CELAVIVE", n: "Postbiotic Barrier Balm", p: 0, d: "Bálsamo ultra-hidratante con posbióticos que ayuda a calmar y proteger la barrera cutánea de agresores externos."},
         
         // SENSÉ
-        {id: 311, cat: "SENSÉ", n: "Energizing Shower Gel", p: 456, d: "Gel de ducha refrescante con extractos botánicos que limpia sin resecar la piel."},
-        {id: 312, cat: "SENSÉ", n: "Revitalizing Shampoo", p: 456, d: "Shampoo equilibrante que fortalece el cabello desde la raíz y aporta brillo natural."},
-        {id: 313, cat: "SENSÉ", n: "Nourishing Conditioner", p: 456, d: "Acondicionador hidratante que devuelve el brillo y la suavidad al cabello maltratado."},
-        {id: 314, cat: "SENSÉ", n: "Firming Body Nourisher", p: 624, d: "Crema corporal reafirmante que hidrata profundamente y mejora la elasticidad de la piel."},
-        {id: 315, cat: "SENSÉ", n: "Intensive Hand Therapy", p: 462, d: "Crema intensiva para manos que combate la sequedad extrema sin dejar sensación grasa."},
-        {id: 398, cat: "CUIDADO ORAL", n: "Whitening Toothpaste", p: 258, d: "Pasta dental libre de flúor con ADP-1 para una limpieza profunda y sonrisa más blanca."},
+        {id: 311, cat: "SENSÉ", n: "Energizing Shower Gel", p: 0, d: "Gel de ducha refrescante con extractos botánicos que limpia sin resecar la piel."},
+        {id: 312, cat: "SENSÉ", n: "Revitalizing Shampoo", p: 0, d: "Shampoo equilibrante que fortalece el cabello desde la raíz y aporta brillo natural."},
+        {id: 313, cat: "SENSÉ", n: "Nourishing Conditioner", p: 0, d: "Acondicionador hidratante que devuelve el brillo y la suavidad al cabello maltratado."},
+        {id: 314, cat: "SENSÉ", n: "Firming Body Nourisher", p: 0, d: "Crema corporal reafirmante que hidrata profundamente y mejora la elasticidad de la piel."},
+        {id: 315, cat: "SENSÉ", n: "Intensive Hand Therapy", p: 0, d: "Crema intensiva para manos que combate la sequedad extrema sin dejar sensación grasa."},
+        {id: 398, cat: "CUIDADO ORAL", n: "Whitening Toothpaste", p: 0, d: "Pasta dental libre de flúor con ADP-1 para una limpieza profunda y sonrisa más blanca."},
         
         // PAQUETES Y PROMOCIONES
-        {id: 163, cat: "PAQUETES", n: "Paquete Vida Sana", p: 2678, d: "El inicio ideal: Incluye CellSentials y BiOmega para un soporte nutricional de base sólida."},
-        {id: 165, cat: "PAQUETES", n: "Paquete Biomega 11*10", p: 6360, d: "Ahorra adquiriendo 11 unidades de BiOmega al precio de 10. Salud cardiovascular al mejor precio."},
-        {id: 910, cat: "PAQUETES", n: "Paquete Proflavanol C100 11*10", p: 9600, d: "Promoción especial de 11 unidades de Proflavanol para un soporte antioxidante prolongado."},
-        {id: 951, cat: "PROMOCIONES", n: "Promoción 'Shake USANA'", p: 5999, d: "Incluye 2 RESET KIT (Wild Strawberry), 2 MTB+ y un Shaker BrüMate edición limitada sin costo."},
+        {id: 163, cat: "PAQUETES", n: "Paquete Vida Sana", p: 0, d: "El inicio ideal: Incluye CellSentials y BiOmega para un soporte nutricional de base sólida."},
+        {id: 165, cat: "PAQUETES", n: "Paquete Biomega 11*10", p: 0, d: "Ahorra adquiriendo 11 unidades de BiOmega al precio de 10. Salud cardiovascular al mejor precio."},
+        {id: 910, cat: "PAQUETES", n: "Paquete Proflavanol C100 11*10", p: 0, d: "Promoción especial de 11 unidades de Proflavanol para un soporte antioxidante prolongado."},
+        {id: 951, cat: "PROMOCIONES", n: "Promoción 'Shake USANA'", p: 0, d: "Incluye 2 RESET KIT (Wild Strawberry), 2 MTB+ y un Shaker BrüMate edición limitada sin costo."}
     ];
 
     const grid = document.getElementById('product-grid');
@@ -167,7 +170,7 @@
     function render(data) {
         grid.innerHTML = data.map(p => `
             <div class="card">
-                <img src="img/${p.id}.jpg" class="card-img" loading="lazy" onerror="this.src='https://via.placeholder.com/300x230?text=${p.n}'">
+                <img src="img/${p.id}.jpg" class="card-img" loading="lazy" onerror="this.src='https://via.placeholder.com/300x230?text=${encodeURIComponent(p.n)}'">
                 <div class="card-body">
                     <div class="card-info-top">
                         <h3>${p.n}</h3>
